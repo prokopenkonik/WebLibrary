@@ -22,11 +22,21 @@
         </form>
 		<c:choose>
 			<c:when test="${not empty sessionScope.user}">
-				<img class="user-logo" src="../images/user.png" alt=""><span class="hello">Здравствуйте, <c:out value="${sessionScope.user.login}" /></span>
+				<img class="user-logo" src="../images/user.png" alt="">
+				<span class="hello">Здравствуйте, <c:out value="${sessionScope.user.login}" /></span>
+				<form method="POST" action="">
+					<input type="hidden" name="command" value="logout"/>
+					<input class="enter" type="submit" value="Выход">
+				</form>
 			</c:when>
 			
 			<c:when test="${not empty sessionScope.admin}">
-				<img class="user-logo" src="../images/user.png" alt=""><span class="hello"><c:out value="${sessionScope.admin.login}" /></span>
+				<img class="user-logo" src="../images/user.png" alt="">
+				<span class="hello">Приветствую, <c:out value="${sessionScope.admin.login}" /></span>
+				<form method="POST" action="">
+					<input type="hidden" name="command" value="logout"/>
+					<input class="enter" type="submit" value="Выход">
+				</form>
 			</c:when>
 			
 			<c:otherwise>

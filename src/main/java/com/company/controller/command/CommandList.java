@@ -8,7 +8,8 @@ public enum CommandList {
     GET_BOOK(new GetBookCommand()),
     SEARCH_BOOK(new SearchBookCommand()),
     AUTHORIZATION(new AuthorizeCommand()),
-    DELETE_BOOK(new DeleteBookCommand());
+    DELETE_BOOK(new DeleteBookCommand()),
+    LOGOUT(new LogoutCommand());
 
     private Command command;
 

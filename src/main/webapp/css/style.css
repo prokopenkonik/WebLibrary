@@ -78,7 +78,6 @@ header{
 .login{
 	margin-left:5vw;
 }
-
 .enter{
 	background: none;
 	font-family: cursive;
@@ -125,7 +124,7 @@ header{
 	margin-top:0.5vw;
 	position: absolute;
     right: 14vw;
-    top: 0.1vw;
+    top: 3.1vw;
 }
 .hello{
 	display: inline-block;
@@ -134,7 +133,7 @@ header{
 	margin-left:0.3vw;
 	font-weight: bold;
 	font-size:0.9vw;
-	top: 1vw;
+	top: 4vw;
 }
 .body-block{
 	min-height: calc(100% - 5.2vw);
