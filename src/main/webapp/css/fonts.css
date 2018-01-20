@@ -1,0 +1,24 @@
+@font-face {
+    font-family: "slogan";
+    src: url("../fonts/slogan.otf") format("opentype");
+    font-style: normal;
+    font-weight: normal;
+}
+@font-face {
+    font-family: "filters";
+    src: url("../fonts/filters.otf") format("opentype");
+    font-style: normal;
+    font-weight: normal;
+}
+@font-face {
+    font-family: "names";
+    src: url("../fonts/names.otf") format("opentype");
+    font-style: normal;
+    font-weight: normal;
+}
+@font-face {
+    font-family: "orders";
+    src: url("../fonts/orders.otf") format("opentype");
+    font-style: normal;
+    font-weight: normal;
+}
