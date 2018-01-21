@@ -1,6 +1,7 @@
 package com.company.controller.command.impl;
 
 import com.company.controller.command.Command;
+import com.company.controller.util.Encryptor;
 import com.company.domain.Administrator;
 import com.company.domain.User;
 import com.company.model.dao.IAdminDao;
@@ -17,7 +18,7 @@ public class AuthorizeCommand implements Command {
         IDaoFactory factory = DaoFactory.getInstance();
         try {
             String login = request.getParameter("login");
-            String password = request.getParameter("password");
+            String password = Encryptor.getHash(request.getParameter("password"));
             IAdminDao adminDao = factory.getAdminDao();
             Administrator admin = adminDao.getAdminByLogin(login);
             if (admin != null && admin.getPassword().equals(password)) {

@@ -1,6 +1,7 @@
 package com.company.controller.command.impl;
 
 import com.company.controller.command.Command;
+import com.company.controller.util.Encryptor;
 import com.company.domain.User;
 import com.company.model.dao.IDaoFactory;
 import com.company.model.dao.IUserDao;
@@ -17,7 +18,7 @@ public class RegistrationCommand implements Command {
             IUserDao userDao = factory.getUserDao();
             User user = new User();
             user.setLogin(request.getParameter("login"));
-            user.setPassword(request.getParameter("pass"));
+            user.setPassword(Encryptor.getHash(request.getParameter("pass")));
             user.setName(String.format("%s %s",
                     request.getParameter("name"),
                     request.getParameter("surname")));
