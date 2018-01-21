@@ -8,45 +8,41 @@
 	
     <div class="body-block">
         <h2 class="h2-title">Регистрация</h2>
-        <form method="post" id="form_reg" action="">
+        <form method="POST" id="form_reg" action="/">
+			<input type="hidden" name="command" value="registration"/>
             <p id="reg_message"></p>
             <div id="block-form-registration">
                 <ul id="form-registration">
                     <li>
                         <label>Логин</label>
                         <span class="star" >*</span>
-                        <input type="text" name="reg_login" id="reg_login" />
+                        <input type="text" name="login" id="reg_login" />
                     </li>
                     <li>
                         <label>Пароль</label>
                         <span class="star" >*</span>
-                        <input type="text" name="reg_pass" id="reg_pass" />
-                        <span id="genpass">Сгенерировать</span>
+                        <input type="password" name="pass" id="reg_pass" />
+                        <%--<span id="genpass">Сгенерировать</span>--%>
+                    </li>
+					<li>
+                        <label>Имя</label>
+                        <span class="star" >*</span>
+                        <input type="text" name="name" id="reg_name" />
                     </li>
                     <li>
                         <label>Фамилия</label>
                         <span class="star" >*</span>
-                        <input type="text" name="reg_surname" id="reg_surname" />
-                    </li>
-                    <li>
-                        <label>Имя</label>
-                        <span class="star" >*</span>
-                        <input type="text" name="reg_name" id="reg_name" />
-                    </li>
-                    <li>
-                        <label>Отчество</label>
-                        <span class="star" >*</span>
-                        <input type="text" name="reg_patronymic" id="reg_patronymic" />
+                        <input type="text" name="surname" id="reg_surname" />
                     </li>
                     <li>
                         <label>E-mail</label>
                         <span class="star" >*</span>
-                        <input type="text" name="reg_email" id="reg_email" />
+                        <input type="text" name="mail" id="reg_email" />
                     </li>
                     <li>
                         <label>Мобильный телефон</label>
                         <span class="star" >*</span>
-                        <input type="text" name="reg_phone" id="reg_phone" />
+                        <input type="text" name="phone" id="reg_phone" />
                     </li>
                 </ul>
             </div>

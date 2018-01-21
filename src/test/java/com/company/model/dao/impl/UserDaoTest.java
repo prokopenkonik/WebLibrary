@@ -24,4 +24,19 @@ public class UserDaoTest {
         Assert.assertNotNull(user);
         Assert.assertEquals(user.getLogin(), login);
     }
+
+    @Test
+    public void create() throws Exception {
+        User user = new User();
+        user.setLogin("useruser");
+        user.setPassword("123");
+        user.setPhoneNumber("123456789");
+        user.setName("Name Surname");
+        user.setMail("qwe@gmail.com");
+        userDao.create(user);
+        User otherUser = userDao.getUserByLogin(user.getLogin());
+        user.setId(otherUser.getId());
+        Assert.assertNotNull(otherUser);
+        Assert.assertEquals(user, otherUser);
+    }
 }

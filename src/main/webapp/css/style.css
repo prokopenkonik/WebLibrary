@@ -12,7 +12,7 @@ header{
 	width:100vw;
 	border-bottom:0.05vw solid black;
 	height:5.7vw;
-	background: rgba(204, 202, 199, 0.3);
+	background: #F0F0ED;
 }
 .logotip{
 	position: absolute;

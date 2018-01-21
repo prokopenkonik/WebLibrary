@@ -16,7 +16,9 @@ import java.util.List;
 public class UserDao extends AbstractDao<User> implements IUserDao {
 
     private static final String SQL_GET_USER_BY_LOGIN =
-            "SELECT * FROM librarydb.users where Login = ?";
+            "SELECT * FROM users where Login = ?";
+    private static final String SQL_ADD_USER =
+            "INSERT INTO users (Login, Password, Phone, Name, Mail) VALUES(?,?,?,?,?)";
 
     UserDao(ConnectionFactory connectionFactory) {
         super(connectionFactory);
@@ -24,7 +26,29 @@ public class UserDao extends AbstractDao<User> implements IUserDao {
 
     @Override
     public void create(User entity) throws DaoException {
-
+        User user = getUserByLogin(entity.getLogin());
+        if (user != null) {
+            throw new DaoException("Such login already exists");
+        }
+        Connection connection;
+        PreparedStatement statement = null;
+        try {
+            connection = connectionFactory.getConnection();
+            statement = connection.prepareStatement(SQL_ADD_USER);
+            statement.setString(1, entity.getLogin());
+            statement.setString(2, entity.getPassword());
+            statement.setString(3, entity.getPhoneNumber());
+            statement.setString(4, entity.getName());
+            statement.setString(5, entity.getMail());
+            int count = statement.executeUpdate();
+            if (count != 1) {
+                throw new DaoException("Modified more then 1 record");
+            }
+        } catch (SQLException e) {
+            throw new DaoException("Request failed", e);
+        } finally {
+            this.close(statement);
+        }
     }
 
     @Override
