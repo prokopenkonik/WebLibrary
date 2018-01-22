@@ -31,6 +31,10 @@
 			</c:when>
 			
 			<c:when test="${not empty sessionScope.admin}">
+				<form action="" method="POST">
+					<input type="hidden" name="command" value="add_book"/>
+					<input class="add_book" type="submit" value="Добавить товар">
+				</form>
 				<img class="user-logo" src="../images/user.png" alt="">
 				<span class="hello">Приветствую, <c:out value="${sessionScope.admin.login}" /></span>
 				<form method="POST" action="">

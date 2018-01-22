@@ -6,4 +6,5 @@ public interface IDaoFactory {
     IBookDao getBookDao() throws DaoException;
     IUserDao getUserDao() throws DaoException;
     IAdminDao getAdminDao() throws DaoException;
+    IAuthorDao getAuthorDao() throws DaoException;
 }

@@ -1,5 +1,6 @@
 package com.company.model.dao.impl;
 
+import com.company.domain.Author;
 import com.company.domain.Book;
 import com.company.model.dao.IBookDao;
 import com.company.model.dao.IDaoFactory;
@@ -48,6 +49,20 @@ public class BookDaoTest {
         List<Book> books = bookDao.getBooksByClientQuery("пушкин");
         Assert.assertNotNull(books);
         Assert.assertTrue(books.size() > 0);
+    }
+
+    @Test
+    public void update() throws Exception {
+        String title = "New title";
+        Book book = bookDao.get(11);
+        book.setTitle(title);
+        Author author = new Author("www","www");
+        book.addAuthor(author);
+        bookDao.update(book);
+        Book modifiedBook = bookDao.get(11);
+        Assert.assertEquals(modifiedBook.getTitle(), title);
+        Assert.assertTrue(book.getAuthors().size() > 1);
+        Assert.assertEquals(book.getAuthors().get(1).getName(), author.getName());
     }
 
     @Ignore

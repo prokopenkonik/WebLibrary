@@ -7,6 +7,7 @@ html{
 	height:100%;
 }
 header{
+    z-index:9999;
 	position: fixed;
 	top: 0;
 	width:100vw;
@@ -188,6 +189,10 @@ aside{
 	width:6.7vw;
 }
 .edit{
+    background:url("../images/edit.png");
+    background-size:100% 100%;
+    border:none;
+    cursor:pointer;
 	width:1.3vw !important;
 	float:left;
 }
@@ -196,7 +201,6 @@ aside{
     background-size:100% 100%;
     border:none;
 	width:1.3vw !important;
-    display:inline-block;
 	cursor:pointer;
     position:absolute;
     left:5vw;
@@ -533,8 +537,8 @@ footer{
 	font-weight: bold;
 }
 .add-book ul li textarea{
-	width:26vw;
-	height:10.4vw;
+	width:40vw;
+	height:15vw;
 	font-size: 1vw;
 	font-family: "orders";
 	font-weight: bold;
@@ -564,7 +568,7 @@ footer{
 .edit-submit{
 	font-size: 0.9vw;
 	float:right;
-	margin-right:8vw;
+	margin-right:2vw;
 	margin-top:1vw;
 	background: none;
 	border:none;

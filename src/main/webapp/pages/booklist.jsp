@@ -10,8 +10,13 @@
 				<li>
 				
 					<c:if test="${not empty sessionScope.admin}">
-						<div class="control-panel">
-							<a class="edit-href" href="pages/edit-book.jsp"><img class="edit" src="../images/edit.png" alt=""></a>
+						<div class="control-panel">							
+							<form method="POST" action="">
+								<input type="hidden" name="command" value="get_book_to_update"/>
+								<input type="hidden" name="id" value="<c:out value="${book.id}"/>"/>
+								<input class="edit" type="submit" value="" />
+							</form>
+							
 							<form method="POST" action="">
 								<input type="hidden" name="command" value="delete_book"/>
 								<input type="hidden" name="id" value="<c:out value="${book.id}"/>"/>

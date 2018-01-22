@@ -18,6 +18,11 @@ public class Author extends Entity {
         this.surname = surname;
     }
 
+    public Author(String name, String surname) {
+        this.name = name;
+        this.surname = surname;
+    }
+
     public String getName() {
         return name;
     }
@@ -52,6 +57,6 @@ public class Author extends Entity {
 
     @Override
     public String toString() {
-        return surname + " " + name;
+        return name + " " + surname;
     }
 }

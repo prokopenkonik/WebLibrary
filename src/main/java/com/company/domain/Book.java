@@ -2,29 +2,30 @@ package com.company.domain;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 
 public class Book extends Entity{
     private String title;
-    private int copiesCount;
     private String genre;
     private String publisher;
     private int publishingYear;
     private String description;
+    private boolean taken;
     private List<Author> authors = new ArrayList<>();
 
     public Book() {
     }
 
-    public Book(int id,String title, int copiesCount,
-                String genre, String publisher, int publishingYear, String description) {
+    public Book(int id,String title, String genre,
+                String publisher, int publishingYear, String description, boolean taken) {
         super(id);
         this.title = title;
-        this.copiesCount = copiesCount;
         this.genre = genre;
         this.publisher = publisher;
         this.publishingYear = publishingYear;
         this.description = description;
+        this.taken = taken;
     }
 
     public String getTitle() {
@@ -33,14 +34,6 @@ public class Book extends Entity{
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public int getCopiesCount() {
-        return copiesCount;
-    }
-
-    public void setCopiesCount(int copiesCount) {
-        this.copiesCount = copiesCount;
     }
 
     public String getGenre() {
@@ -79,6 +72,18 @@ public class Book extends Entity{
         return new ArrayList<>(authors);
     }
 
+    public String getAuthorsAsString() {
+        StringBuilder result = new StringBuilder();
+        Iterator iterator = authors.iterator();
+        while (iterator.hasNext()) {
+            result.append(iterator.next().toString());
+            if (iterator.hasNext()) {
+                result.append(", ");
+            }
+        }
+        return result.toString();
+    }
+
     public void setAuthors(Collection<Author> authors) {
         this.authors = new ArrayList<>(authors);
     }
@@ -91,9 +96,16 @@ public class Book extends Entity{
         this.authors.addAll(authors);
     }
 
+    public boolean isTaken() {
+        return taken;
+    }
+
+    public void setTaken(boolean taken) {
+        this.taken = taken;
+    }
+
     @Override
     public String toString() {
         return title;
     }
-
 }
