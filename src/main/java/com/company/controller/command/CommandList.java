@@ -12,7 +12,8 @@ public enum CommandList {
     LOGOUT(new LogoutCommand()),
     REGISTRATION(new RegistrationCommand()),
     GET_BOOK_TO_UPDATE(new GetBookToUpdateCommand()),
-    EDIT_BOOK(new EditBookCommand());
+    EDIT_BOOK(new EditBookCommand()),
+    ADD_BOOK(new AddBookCommand());
 
     private Command command;
 

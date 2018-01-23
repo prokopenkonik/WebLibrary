@@ -21,6 +21,26 @@ public class BookDaoTest {
         bookDao = factory.getBookDao();
     }
 
+    @Ignore
+    @Test
+    public void create() throws Exception {
+        Book book = new Book();
+        book.setTitle("Mybook");
+        book.setPublisher("New publisher");
+        book.setPublishingYear(1230);
+        book.setGenre("Genre");
+        book.setDescription("eeeeeeeeee");
+        Author author = new Author("New", "Author");
+        book.addAuthor(author);
+        author = new Author("Александр", "Пушкин");
+        book.addAuthor(author);
+        bookDao.create(book);
+
+        List<Book> books = bookDao.getBooksByClientQuery("Mybook");
+        Assert.assertNotNull(books);
+        Assert.assertTrue(books.size() == 1);
+    }
+
     @Test
     public void get() throws Exception {
         Book book = bookDao.get(1);

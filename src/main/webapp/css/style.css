@@ -578,3 +578,73 @@ footer{
 	font-weight: bold;
 	cursor: pointer;
 }
+.my_orders, .profile, .add_book{
+	position: absolute;
+	border:none;
+	background: none;
+	font-family: "slogan";
+	cursor: pointer;
+	font-size:0.8vw;
+}
+.my_orders:hover, .profile:hover, .add_book:hover {
+	color:brown;
+	font-weight: bold;
+}
+.my_orders {
+	right:8vw;
+	top:0.5vw;
+}
+.profile {
+	right: 5vw;
+	top:4.5vw;
+}
+.add_book{
+	right:15vw;
+	top:0.5vw;
+}
+.put-back{
+	margin-left:0.1vw;
+	background: none;
+	border:none;
+	cursor: pointer;
+	font-size:1vw;
+	color:#a87325;
+	font-family: "slogan";
+}
+.my-orders{
+	margin-top:1vw;
+	margin-left:4.7vw;
+}
+.my-orders span{
+	font-family: "orders";
+	display: inline-block;
+	font-size:0.8vw;
+}
+.my-orders span:nth-child(1){
+	width:1.5vw;
+	margin-left:4.2vw;
+}
+.my-orders span:nth-child(2){
+	width:10.3vw;
+	margin-left:7.6vw;
+}
+.my-orders span:nth-child(3){
+	width:13vw;
+	margin-left:4.5vw;
+}
+.my-orders span:nth-child(4){
+	width:6.7vw;
+	margin-left:0.5vw;
+}
+.my-orders span:nth-child(5){
+	width:15.6vw;
+	margin-left:4vw;
+}
+.my-orders span:nth-child(6){
+	width:4.2vw;
+	margin-left:1.3vw;
+}
+.my-orders span:nth-child(7){
+	width:4.2vw;
+	margin-left:9.5vw;
+}

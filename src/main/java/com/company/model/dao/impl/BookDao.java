@@ -17,6 +17,10 @@ import java.util.List;
 
 public class BookDao extends AbstractDao<Book> implements IBookDao {
 
+    private static final String SQL_GET_ID_BY_TITLE =
+            "SELECT books.Book_ID FROM books WHERE Title=?";
+    private static final String SQL_ADD_BOOK =
+            "INSERT INTO books (Title, Publisher, Publishing_Year, Genre, Description, Taken) VALUES(?,?,?,?,?,?)";
     private static final String SQL_DELETE_RELATIONS =
             "DELETE FROM books_and_authors WHERE Book_ID=?";
     private static final String SQL_ADD_RELATION =
@@ -46,7 +50,68 @@ public class BookDao extends AbstractDao<Book> implements IBookDao {
 
     @Override
     public void create(Book entity) throws DaoException {
+        Book book = get(entity.getId());
+        if (book != null) {
+            throw new DaoException("Such book already exists");
+        }
+        Connection connection;
+        try {
+            connection = connectionFactory.getConnection();
+            PreparedStatement statement = null;
+            try {
+                connection.setAutoCommit(false);
+                statement = connection.prepareStatement(SQL_ADD_BOOK);
+                statement.setString(1, entity.getTitle());
+                statement.setString(2, entity.getPublisher());
+                statement.setInt(3, entity.getPublishingYear());
+                statement.setString(4, entity.getGenre());
+                statement.setString(5, entity.getDescription());
+                statement.setInt(6, 0);
+                statement.executeUpdate();
 
+                IAuthorDao authorDao = DaoFactory.getInstance().getAuthorDao();
+                for (Author author : entity.getAuthors()) {
+                    try {
+                        authorDao.create(author);
+                    } catch (DaoException e) {
+                        if (!e.getMessage().equals("Such author already exists")) {
+                            throw e;
+                        }
+                    }
+                    statement = connection.prepareStatement(SQL_ADD_RELATION);
+                    statement.setInt(1, getIdByTitle(entity.getTitle()));
+                    statement.setInt(2, authorDao.getAuthorByNameAndSurname(author).getId());
+                    statement.executeUpdate();
+                }
+                connection.commit();
+            } catch (SQLException e) {
+                connection.rollback();
+                throw new DaoException("Request failed", e);
+            } finally {
+                connection.setAutoCommit(true);
+                this.close(statement);
+            }
+        } catch (SQLException e) {
+            throw new DaoException("Request failed", e);
+        }
+    }
+
+    private int getIdByTitle(String title) throws DaoException {
+        Connection connection;
+        PreparedStatement statement;
+        try {
+            connection = connectionFactory.getConnection();
+            statement = connection.prepareStatement(SQL_GET_ID_BY_TITLE);
+            statement.setString(1, title);
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("Book_ID");
+            } else {
+                throw new DaoException("Request failed");
+            }
+        } catch (SQLException e) {
+            throw new DaoException("Request failed", e);
+        }
     }
 
     @Override

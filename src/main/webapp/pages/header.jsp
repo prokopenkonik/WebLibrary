@@ -31,10 +31,7 @@
 			</c:when>
 			
 			<c:when test="${not empty sessionScope.admin}">
-				<form action="" method="POST">
-					<input type="hidden" name="command" value="add_book"/>
-					<input class="add_book" type="submit" value="Добавить товар">
-				</form>
+				<a href="../pages/add-book.jsp" class="add_book">Добавить книгу</a>
 				<img class="user-logo" src="../images/user.png" alt="">
 				<span class="hello">Приветствую, <c:out value="${sessionScope.admin.login}" /></span>
 				<form method="POST" action="">
@@ -49,7 +46,7 @@
 					<input class="login" type="text" placeholder="Логин" name="login" value="">
 					<input class="password" type="password" placeholder="Пароль" name="password" value="">
 					<input class="enter" type="submit" value="Вход">
-					<a href="pages/registration.jsp" class="registration">Регистрация</a>
+					<a href="..pages/registration.jsp" class="registration">Регистрация</a>
 					<input class="remind" type="checkbox"><span class="remind-span">Запомнить меня</span>
 				</form>
 			</c:otherwise>
