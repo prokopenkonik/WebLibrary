@@ -22,6 +22,10 @@
         </form>
 		<c:choose>
 			<c:when test="${not empty sessionScope.user}">
+				<form action="" method="POST">
+					<input type="hidden" name="command" value="get_orders"/>
+					<input class="my_orders" type="submit" value="Взятые книги">
+				</form>
 				<img class="user-logo" src="../images/user.png" alt="">
 				<span class="hello">Здравствуйте, <c:out value="${sessionScope.user.login}" /></span>
 				<form method="POST" action="">
@@ -32,6 +36,10 @@
 			
 			<c:when test="${not empty sessionScope.admin}">
 				<a href="../pages/add-book.jsp" class="add_book">Добавить книгу</a>
+				<form action="" method="POST">
+					<input type="hidden" name="command" value="get_orders_for_admin"/>
+					<input class="my_orders" type="submit" value="Взятые книги">
+				</form>
 				<img class="user-logo" src="../images/user.png" alt="">
 				<span class="hello">Приветствую, <c:out value="${sessionScope.admin.login}" /></span>
 				<form method="POST" action="">
@@ -46,7 +54,7 @@
 					<input class="login" type="text" placeholder="Логин" name="login" value="">
 					<input class="password" type="password" placeholder="Пароль" name="password" value="">
 					<input class="enter" type="submit" value="Вход">
-					<a href="..pages/registration.jsp" class="registration">Регистрация</a>
+					<a href="../pages/registration.jsp" class="registration">Регистрация</a>
 					<input class="remind" type="checkbox"><span class="remind-span">Запомнить меня</span>
 				</form>
 			</c:otherwise>

@@ -26,7 +26,7 @@ public class BookDao extends AbstractDao<Book> implements IBookDao {
     private static final String SQL_ADD_RELATION =
             "INSERT INTO books_and_authors (Book_ID, Author_ID) VALUES(?,?)";
     private static final String SQL_UPDATE_BOOK =
-            "UPDATE books SET Title=?, Publisher=?, Publishing_Year=?, Genre=?, Description=? WHERE Book_ID=?";
+            "UPDATE books SET Title=?, Publisher=?, Publishing_Year=?, Genre=?, Description=?, Taken=? WHERE Book_ID=?";
     private static final String SQL_DELETE_BOOK =
             "delete from books where Book_ID=?";
     private static final String SQL_DELETE_BOOKS_AND_AUTHORS =
@@ -174,7 +174,8 @@ public class BookDao extends AbstractDao<Book> implements IBookDao {
                 statement.setInt(3, entity.getPublishingYear());
                 statement.setString(4, entity.getGenre());
                 statement.setString(5, entity.getDescription());
-                statement.setInt(6, entity.getId());
+                statement.setInt(6, entity.isTaken() ? 1 : 0);
+                statement.setInt(7, entity.getId());
                 statement.executeUpdate();
                 IAuthorDao authorDao = DaoFactory.getInstance().getAuthorDao();
 

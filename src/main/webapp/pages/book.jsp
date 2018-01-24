@@ -19,16 +19,20 @@
 				<c:choose>
 					<c:when test="${not book.taken}">
 						Есть в наличии
+						<c:if test="${empty sessionScope.admin}">
+							<form action="" method="POST">
+								<input type="hidden" name="id" value="<c:out value="${book.id}"/>"/>
+								<input type="hidden" name="command" value="hire_book"/>
+								<input class="hire-book" type="submit" value="Заказать">
+								<input type="date" name="date" value="">
+							</form>
+						</c:if>
 					</c:when>
 					<c:otherwise>
 						Книгу уже читают
 					</c:otherwise>
 				</c:choose>
 			</p>
-			<form action="" method="POST">
-				<input class="hire-book" type="submit" value="Заказать">
-				<input type="date">
-			</form>
         </div>
         <p class="mini-description-span">Краткое содержание:</p>
         <p class="mini-description"><c:out value="${book.description}"/></p>

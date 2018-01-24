@@ -3,7 +3,6 @@ package com.company.controller.command;
 import com.company.controller.command.impl.*;
 
 public enum CommandList {
-    DEFAULT(new DefaultCommand()),
     GET_ALL_BOOKS(new GetAllBooksCommand()),
     GET_BOOK(new GetBookCommand()),
     SEARCH_BOOK(new SearchBookCommand()),
@@ -13,7 +12,10 @@ public enum CommandList {
     REGISTRATION(new RegistrationCommand()),
     GET_BOOK_TO_UPDATE(new GetBookToUpdateCommand()),
     EDIT_BOOK(new EditBookCommand()),
-    ADD_BOOK(new AddBookCommand());
+    ADD_BOOK(new AddBookCommand()),
+    HIRE_BOOK(new HireBookCommand()),
+    GET_ORDERS_FOR_ADMIN(new GetOrdersForAdminCommand()),
+    GET_ORDERS(new GetOrdersCommand());
 
     private Command command;
 

@@ -1,68 +1,59 @@
 package com.company.domain;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.Date;
 
 public class Order extends Entity {
-    private String creationDate;
-    private String endingDate;
-    private String status;
-    private List<Book> books = new ArrayList<>();
+    private Date creationDate;
+    private Date endingDate;
+    private boolean accepted;
+    private User user;
+    private Book book;
 
     public Order() {
     }
 
-    public Order(int id, String creationDate, String endingDate,
-                 String status) {
-        super(id);
-        this.creationDate = creationDate;
-        this.endingDate = endingDate;
-        this.status = status;
-    }
-
-    public String getCreationDate() {
+    public Date getCreationDate() {
         return creationDate;
     }
 
-    public void setCreationDate(String creationDate) {
+    public void setCreationDate(Date creationDate) {
         this.creationDate = creationDate;
     }
 
-    public String getEndingDate() {
+    public Date getEndingDate() {
         return endingDate;
     }
 
-    public void setEndingDate(String endingDate) {
+    public void setEndingDate(Date endingDate) {
         this.endingDate = endingDate;
     }
 
-    public String getStatus() {
-        return status;
+    public boolean isAccepted() {
+        return accepted;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setAccepted(boolean accepted) {
+        this.accepted = accepted;
     }
 
-    public List<Book> getBooks() {
-        return new ArrayList<>(books);
+    public User getUser() {
+        return user;
     }
 
-    public void setBooks(Collection<Book> books) {
-        this.books = new ArrayList<>(books);
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public void addBook(Book book) {
-        books.add(book);
+    public Book getBook() {
+        return book;
     }
 
-    public void addBooks(Collection<Book> books) {
-        this.books.addAll(books);
+    public void setBook(Book book) {
+        this.book = book;
     }
 
     @Override
     public String toString() {
-        return status;
+        return String.format("Order №%d", getId());
     }
 }

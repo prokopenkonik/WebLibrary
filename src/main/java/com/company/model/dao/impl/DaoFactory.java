@@ -34,4 +34,9 @@ public class DaoFactory implements IDaoFactory {
     public IAuthorDao getAuthorDao() throws DaoException {
         return new AuthorDao(ConnectionImpl.getInstance());
     }
+
+    @Override
+    public IOrderDao getOrderDao() throws DaoException {
+        return new OrderDao(ConnectionImpl.getInstance());
+    }
 }
