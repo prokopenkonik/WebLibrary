@@ -15,7 +15,8 @@ public enum CommandList {
     ADD_BOOK(new AddBookCommand()),
     HIRE_BOOK(new HireBookCommand()),
     GET_ORDERS_FOR_ADMIN(new GetOrdersForAdminCommand()),
-    GET_ORDERS(new GetOrdersCommand());
+    GET_ORDERS(new GetOrdersCommand()),
+    RETURN_BOOK(new ReturnBookCommand());
 
     private Command command;
 

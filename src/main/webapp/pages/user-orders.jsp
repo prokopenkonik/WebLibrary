@@ -21,6 +21,9 @@
                 <span><c:out value="${order.endingDate}"/></span>
 				<span>
 					<form action="" method="POST">
+						<input type="hidden" name="command" value="return_book"/>
+						<input type="hidden" name="order_id" value="<c:out value="${order.id}"/>"/>
+						<input type="hidden" name="book_id" value="<c:out value="${order.book.id}"/>"/>
 						<input class="put-back" type="submit" value="Сдать">
 					</form>
 				</span>

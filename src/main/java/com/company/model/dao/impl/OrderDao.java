@@ -21,6 +21,8 @@ public class OrderDao extends AbstractDao<Order> implements IOrderDao {
                     "FROM orders JOIN books ON orders.Book_ID=books.Book_ID JOIN users ON orders.User_ID=users.User_ID";
     private static final String SQL_GET_ORDERS_BY_USERS_ID =
             "SELECT Order_ID, Creation_Date, End_Date, Accepted, books.Book_ID, Title FROM orders JOIN books ON orders.Book_ID=books.Book_ID JOIN users ON orders.User_ID=users.User_ID WHERE users.User_ID=?";
+    private static final String SQL_DELETE_ORDER =
+            "DELETE FROM orders WHERE Order_ID=?";
 
     OrderDao(ConnectionFactory connectionFactory) {
         super(connectionFactory);
@@ -112,7 +114,21 @@ public class OrderDao extends AbstractDao<Order> implements IOrderDao {
 
     @Override
     public void delete(Order entity) throws DaoException {
-
+        Connection connection;
+        PreparedStatement statement = null;
+        try {
+            connection = connectionFactory.getConnection();
+            statement = connection.prepareStatement(SQL_DELETE_ORDER);
+            statement.setInt(1, entity.getId());
+            int count = statement.executeUpdate();
+            if (count != 1) {
+                throw new DaoException("Deleted more then 1 record");
+            }
+        } catch (SQLException e) {
+            throw new DaoException("Request failed", e);
+        } finally {
+            this.close(statement);
+        }
     }
 
     @Override
