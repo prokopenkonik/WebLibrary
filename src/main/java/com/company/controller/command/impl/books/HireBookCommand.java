@@ -1,6 +1,7 @@
-package com.company.controller.command.impl;
+package com.company.controller.command.impl.books;
 
 import com.company.controller.command.Command;
+import com.company.controller.command.impl.books.GetAllBooksCommand;
 import com.company.domain.Book;
 import com.company.domain.Order;
 import com.company.domain.User;

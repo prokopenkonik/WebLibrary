@@ -1,4 +1,4 @@
-package com.company.controller.command.impl;
+package com.company.controller.command.impl.books;
 
 import com.company.controller.command.Command;
 import com.company.controller.util.BooksCrud;
@@ -13,13 +13,15 @@ import com.company.model.exception.DaoException;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
-public class GetAllBooksCommand implements Command {
+public class GetBooksByAuthorCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) {
         IDaoFactory factory = DaoFactory.getInstance();
         try {
             IBookDao bookDao = factory.getBookDao();
-            List<Book> books = bookDao.getBooksWithAuthors();
+            Author author = new Author();
+            author.setId(Integer.parseInt(request.getParameter("author_id")));
+            List<Book> books = bookDao.getBooksByAuthor(author);
             request.setAttribute("list", books);
 
             List<String> genres = bookDao.getGenres();

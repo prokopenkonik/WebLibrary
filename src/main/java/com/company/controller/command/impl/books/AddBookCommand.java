@@ -1,4 +1,4 @@
-package com.company.controller.command.impl;
+package com.company.controller.command.impl.books;
 
 import com.company.controller.command.Command;
 import com.company.controller.util.AuthorParser;
