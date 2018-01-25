@@ -8,23 +8,26 @@
 	<div class="body-block">
         <div class="orders-block">
             <div class="hr">
-                <span>№</span>
-                <span>Имя пользователя</span>
-                <span>Email</span>
-                <span>Телефон</span>
-                <span>Название книги</span>
-                <span>Дата взятия</span>
-                <span>Дата возврата</span>
+                <div>№</div>
+                <div>Имя пользователя</div>
+                <div>Email</div>
+                <div>Телефон</div>
+                <div>Название книги</div>
+                <div>Дата взятия</div>
+                <div>Дата возврата</div>
             </div>
 			<c:forEach var="order" items="${list}">
 				<div class="orders-list">
-                <span><c:out value="${order.id}"/></span>
-                <span><c:out value="${order.user.name}"/></span>
-                <span><c:out value="${order.user.mail}"/></span>
-                <span><c:out value="${order.user.phoneNumber}"/></span>
-                <span><c:out value="${order.book.title}"/></span>
-                <span><c:out value="${order.creationDate}"/></span>
-                <span><c:out value="${order.endingDate}"/></span>
+                <div><c:out value="${order.id}"/></div>
+                <div><c:out value="${order.user.name}"/></div>
+                <div><c:out value="${order.user.mail}"/></div>
+                <div><c:out value="${order.user.phoneNumber}"/></div>
+                <div><c:out value="${order.book.title}"/></div>
+                <div><c:out value="${order.creationDate}"/></div>
+                <div><c:out value="${order.endingDate}"/></div>
+				<form  action="" method="POST">
+					<input class="accept-order" type="submit" value="Подтвердить">
+				</form>
             </div>
 			</c:forEach>
         </div>

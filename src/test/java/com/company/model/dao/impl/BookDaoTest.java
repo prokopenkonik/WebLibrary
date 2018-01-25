@@ -11,6 +11,8 @@ import org.junit.Test;
 
 import java.util.List;
 
+import static org.junit.Assert.*;
+
 public class BookDaoTest {
 
     private IBookDao bookDao;
@@ -93,5 +95,12 @@ public class BookDaoTest {
         bookDao.delete(book);
         book = bookDao.get(12);
         Assert.assertNull(book);
+    }
+
+    @Test
+    public void getGenres() throws Exception {
+        List<String> genres = bookDao.getGenres();
+        Assert.assertNotNull(genres);
+        Assert.assertEquals(genres.get(0), "Роман");
     }
 }

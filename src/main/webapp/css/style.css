@@ -150,22 +150,26 @@ aside{
 	font-size:1vw;
 	font-weight: bold;
 }
-
 .authors, .janr{
-	margin-left:3vw;
-	font-size:0.9vw;
+	margin-left:1vw;
+	font-size:0.8vw;
 }
 .authors li, .janr li{
-	margin-top:0.8vw;
 	font-family: "names";
 	font-weight: bold;
 	color:black;
 }
-.authors li:hover, .janr li:hover{
+.author_name:hover, .janr li:hover{
 	color:orange;
 }
-.janr li{
-    margin-top: 1.5vw;
+.author_name{
+    border:none;
+    background:none;
+    margin-top:0.3vw;
+    font-family: "names";
+    font-weight: bold;
+    color:black;
+    cursor: pointer;
 }
 .filter-name{
 	display: block;
@@ -463,61 +467,70 @@ footer{
     color: rgb(117, 118, 118);
     font-size: 1vw;
 }
-.orders-block{
-	margin-top:7.8vw;
+.orders-block {
+  font-family: "slogan";
+  font-size:0.8vw;
+  margin-top:7vw;
 }
-.hr{
-	margin-left:0;
-	height:1.5vw;
-	line-height: 1.5vw;
-	border:0.05vw solid grey;
-	border-left:none;
-	border-right:none;
-	background: #f4f4f4;
+.hr {
+  padding:0.5vw 0 0.5vw 5vw;
+  border-bottom:0.01vw solid #e1e3e8;
+  background: #e1e3e8;
 }
-.hr span{
-	font-family: "orders";
-	font-weight: bold;
-	color:grey;
-	margin-left:8.8vw;
-	font-size:0.8vw;
+.hr div {
+  display: inline-block;
+  margin-right:8vw;
 }
 .orders-list{
-	margin-top:1vw;
-	margin-left:4.7vw;
+  margin-top:0.8vw;
+  padding-left:5.1vw;
 }
-.orders-list span{
-	font-family: "orders";
-	display: inline-block;
-	font-size:0.8vw;
+.orders-list div {
+  display: inline-block;
+  margin-right:0vw;
+  width:10vw;
 }
-.orders-list span:nth-child(1){
-	width:1.5vw;
-	margin-left:4.2vw;
+.orders-list div:nth-child(1){
+  margin-right:5.5vw;
+  width:3vw;
 }
-.orders-list span:nth-child(2){
-	width:9.3vw;
-	margin-left:9vw;
+.orders-list div:nth-child(2){
+  margin-right:0.1vw;
+  width:13vw;
 }
-.orders-list span:nth-child(3){
-	width:13vw;
-	margin-left:2vw;
+.orders-list div:nth-child(3){
+  width:10vw;
+  margin-right:1.8vw;
 }
-.orders-list span:nth-child(4){
-	width:6.7vw;
-	margin-left:1.8vw;
+.orders-list div:nth-child(4){
+  margin-right:2.5vw;
+  width:8vw;
 }
-.orders-list span:nth-child(5){
-	width:15.6vw;
-	margin-left:4vw;
+.orders-list div:nth-child(5){
+  width:14vw;
+  margin-right:0.5vw;
 }
-.orders-list span:nth-child(6){
-	width:4.2vw;
-	margin-left:1.3vw;
+.orders-list div:nth-child(6){
+  width:5vw;
+  margin-right:8vw;
 }
-.orders-list span:nth-child(7){
-	width:4.2vw;
-	margin-left:9.5vw;
+.orders-list form {
+  display: inline-block;
+}
+.accept-order{
+  background: none;
+  border:none;
+  border:0.1vw solid black;
+  background-color:white;
+  color:black;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.5s ease;
+  font-size:0.7vw;
+}
+.accept-order:hover {
+  background: black;
+  color:white;
 }
 .add-book{
 	margin-top:1.5vw;
@@ -582,9 +595,9 @@ footer{
 	position: absolute;
 	border:none;
 	background: none;
-	font-family: "slogan";
+	font-family: cursive;
 	cursor: pointer;
-	font-size:0.8vw;
+	font-size:0.9vw;
 }
 .my_orders:hover, .profile:hover, .add_book:hover {
 	color:brown;
@@ -592,15 +605,15 @@ footer{
 }
 .my_orders {
 	right:8vw;
-	top:0.5vw;
+	top:0.48vw;
 }
 .profile {
 	right: 5vw;
 	top:4.5vw;
 }
 .add_book{
-	right:15vw;
-	top:0.5vw;
+	right:16vw;
+	top:0.72vw;
 }
 .put-back{
 	margin-left:0.1vw;

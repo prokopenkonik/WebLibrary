@@ -11,19 +11,26 @@
             <span class="filter-span">Сортировать по:</span>
                 <span class="filter-name">Автор</span>
                 	<ul class="authors">
-                		<a href=""><li>Имя автора с базы</li></a>
-                		<a href=""><li>Имя автора с базы</li></a>
-                		<a href=""><li>Имя автора с базы</li></a>
-                		<a href=""><li>Имя автора с базы</li></a>
-                		<a href=""><li>Имя автора с базы</li></a>
+						<c:forEach var="author" items="${authors}">
+							<li>
+								<form method="POST" action="">
+									<input type="hidden" name="command" value="get_books_by_author"/>
+									<input type="hidden" name="author_id" value="<c:out value="${author.id}"/>"/>
+									<input type="submit" class="author_name" value="<c:out value="${author}"/>" />
+								</form>
+							</li>
+						</c:forEach>
                 	</ul>
                 <span class="filter-name">Жанр</span>
 					<ul class="janr">
-						<a href=""><li>Жанр с базы</li></a>
-						<a href=""><li>Жанр с базы</li></a>
-						<a href=""><li>Жанр с базы</li></a>
-						<a href=""><li>Жанр с базы</li></a>
-						<a href=""><li>Жанр с базы</li></a>
+						<c:forEach var="genre" items="${genres}">
+							<li>
+								<form method="POST" action="">
+									<input type="hidden" name="command" value="get_books_by_genre"/>
+									<input type="submit" class="author_name" name="genre" value="<c:out value="${genre}"/>" />
+								</form>
+							</li>
+						</c:forEach>
 					</ul>
         </aside>
         

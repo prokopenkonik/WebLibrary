@@ -13,13 +13,13 @@ import com.company.model.exception.DaoException;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
-public class GetAllBooksCommand implements Command {
+public class GetBooksByGenreCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) {
         IDaoFactory factory = DaoFactory.getInstance();
         try {
             IBookDao bookDao = factory.getBookDao();
-            List<Book> books = bookDao.getBooksWithAuthors();
+            List<Book> books = bookDao.getBooksByGenre(request.getParameter("genre"));
             request.setAttribute("list", books);
 
             List<String> genres = bookDao.getGenres();

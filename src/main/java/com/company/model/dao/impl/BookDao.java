@@ -43,6 +43,11 @@ public class BookDao extends AbstractDao<Book> implements IBookDao {
     private static final String SQL_SEARCH_BOOK = SQL_GET_ALL_BOOKS + SQL_JOIN_AUTHORS
             + " where books.Title like ? or authors.Surname like ?"
             + SQL_SORT_BY_ID_PATTERN;
+    private static final String SQL_GET_BOOKS_BY_AUTHOR =
+            SQL_GET_ALL_BOOKS + SQL_JOIN_AUTHORS + " WHERE authors.Author_ID=?";
+    private static final String GET_GENRES = "select distinct Genre from books";
+    private static final String SQL_GET_BOOKS_BY_GENRE =
+            SQL_GET_ALL_BOOKS + SQL_JOIN_AUTHORS + " WHERE books.Genre=?";
 
     BookDao(ConnectionFactory connectionFactory) {
         super(connectionFactory);
@@ -279,6 +284,76 @@ public class BookDao extends AbstractDao<Book> implements IBookDao {
             return null;
         }
         return books;
+    }
+
+    @Override
+    public List<Book> getBooksByAuthor(Author author) throws DaoException {
+        List<Book> books;
+        Connection connection;
+        PreparedStatement statement = null;
+        try {
+            connection = connectionFactory.getConnection();
+            statement = connection.prepareStatement(SQL_GET_BOOKS_BY_AUTHOR);
+            statement.setInt(1, author.getId());
+            ResultSet rs = statement.executeQuery();
+            books = parseResultSet(rs, true);
+        } catch (SQLException e) {
+            throw new DaoException("Request failed", e);
+        } finally {
+            this.close(statement);
+        }
+        if (books == null || books.size() == 0) {
+            return null;
+        }
+        return books;
+    }
+
+    @Override
+    public List<String> getGenres() throws DaoException {
+        List<String> genres;
+        Connection connection;
+        PreparedStatement statement = null;
+        try {
+            connection = connectionFactory.getConnection();
+            statement = connection.prepareStatement(GET_GENRES);
+            ResultSet rs = statement.executeQuery();
+            genres = parseResultSetForGenres(rs);
+        } catch (SQLException e) {
+            throw new DaoException("Request failed", e);
+        } finally {
+            this.close(statement);
+        }
+        return genres;
+    }
+
+    @Override
+    public List<Book> getBooksByGenre(String genre) throws DaoException {
+        List<Book> books;
+        Connection connection;
+        PreparedStatement statement = null;
+        try {
+            connection = connectionFactory.getConnection();
+            statement = connection.prepareStatement(SQL_GET_BOOKS_BY_GENRE);
+            statement.setString(1, genre);
+            ResultSet rs = statement.executeQuery();
+            books = parseResultSet(rs, true);
+        } catch (SQLException e) {
+            throw new DaoException("Request failed", e);
+        } finally {
+            this.close(statement);
+        }
+        if (books == null || books.size() == 0) {
+            return null;
+        }
+        return books;
+    }
+
+    private List<String> parseResultSetForGenres(ResultSet rs) throws SQLException {
+        List<String> result = new ArrayList<>();
+        while (rs.next()) {
+            result.add(rs.getString("Genre"));
+        }
+        return result;
     }
 
     private List<Book> parseResultSet(ResultSet rs, boolean includeAuthors)

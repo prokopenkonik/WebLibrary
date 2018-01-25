@@ -23,6 +23,8 @@ public class AuthorDao extends AbstractDao<Author> implements IAuthorDao {
             "UPDATE authors SET Name=?, Surname=? WHERE Author_ID=?";
     private static final String SQL_GET_BY_ID =
             "SELECT * FROM authors WHERE Author_ID=?";
+    private static final String SQL_GET_AUTHORS =
+            "SELECT * FROM authors";
 
     AuthorDao(ConnectionFactory connectionFactory) {
         super(connectionFactory);
@@ -79,7 +81,20 @@ public class AuthorDao extends AbstractDao<Author> implements IAuthorDao {
 
     @Override
     public List<Author> getAll() throws DaoException {
-        return null;
+        List<Author> authors;
+        Connection connection;
+        PreparedStatement statement = null;
+        try {
+            connection = connectionFactory.getConnection();
+            statement = connection.prepareStatement(SQL_GET_AUTHORS);
+            ResultSet rs = statement.executeQuery();
+            authors = parseResult(rs);
+        } catch (SQLException e) {
+            throw new DaoException("Request failed", e);
+        } finally {
+            this.close(statement);
+        }
+        return authors;
     }
 
     @Override
