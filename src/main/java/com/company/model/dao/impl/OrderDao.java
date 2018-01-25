@@ -23,6 +23,10 @@ public class OrderDao extends AbstractDao<Order> implements IOrderDao {
             "SELECT Order_ID, Creation_Date, End_Date, Accepted, books.Book_ID, Title FROM orders JOIN books ON orders.Book_ID=books.Book_ID JOIN users ON orders.User_ID=users.User_ID WHERE users.User_ID=?";
     private static final String SQL_DELETE_ORDER =
             "DELETE FROM orders WHERE Order_ID=?";
+    private static final String SQL_GET_BY_ID =
+            "SELECT Order_ID, Creation_Date, End_Date, Accepted, books.Book_ID, Title FROM orders JOIN books ON orders.Book_ID=books.Book_ID WHERE Order_ID=?";
+    private static final String SQL_UPDATE_ORDER =
+            "UPDATE orders SET Creation_Date=?, End_Date=?, Accepted=? WHERE Order_ID=?";
 
     OrderDao(ConnectionFactory connectionFactory) {
         super(connectionFactory);
@@ -53,7 +57,27 @@ public class OrderDao extends AbstractDao<Order> implements IOrderDao {
 
     @Override
     public Order get(int id) throws DaoException {
-        return null;
+        List<Order> orders;
+        Connection connection;
+        PreparedStatement statement = null;
+        try {
+            connection = connectionFactory.getConnection();
+            statement = connection.prepareStatement(SQL_GET_BY_ID);
+            statement.setInt(1, id);
+            ResultSet rs = statement.executeQuery();
+            orders = parseResult(rs, false);
+        } catch (SQLException e) {
+            throw new DaoException("Request failed", e);
+        } finally {
+            this.close(statement);
+        }
+        if (orders == null || orders.size() == 0) {
+            return null;
+        }
+        if (orders.size() > 1) {
+            throw new DaoException("Received more then 1 parameter");
+        }
+        return orders.iterator().next();
     }
 
     @Override
@@ -77,39 +101,26 @@ public class OrderDao extends AbstractDao<Order> implements IOrderDao {
         return orders;
     }
 
-    private List<Order> parseResult(ResultSet rs, boolean includeUser) throws SQLException {
-        List<Order> orders = new ArrayList<>();
-        Order order;
-        Book book;
-        User user;
-        while (rs.next()) {
-            order = new Order();
-            order.setId(rs.getInt("Order_ID"));
-            order.setCreationDate(rs.getDate("Creation_Date"));
-            order.setEndingDate(rs.getDate("End_Date"));
-            order.setAccepted(rs.getInt("Accepted") == 1);
-
-            book = new Book();
-            book.setId(rs.getInt("Book_ID"));
-            book.setTitle(rs.getString("Title"));
-            order.setBook(book);
-
-            if (includeUser) {
-                user = new User();
-                user.setName(rs.getString("Name"));
-                user.setMail(rs.getString("Mail"));
-                user.setPhoneNumber(rs.getString("Phone"));
-                order.setUser(user);
-            }
-
-            orders.add(order);
-        }
-        return orders;
-    }
-
     @Override
     public void update(Order entity) throws DaoException {
-
+        Connection connection;
+        PreparedStatement statement = null;
+        try {
+            connection = connectionFactory.getConnection();
+            statement = connection.prepareStatement(SQL_UPDATE_ORDER);
+            statement.setDate(1, new Date(entity.getCreationDate().getTime()));
+            statement.setDate(2, new Date(entity.getEndingDate().getTime()));
+            statement.setInt(3, entity.isAccepted() ? 1 : 0);
+            statement.setInt(4, entity.getId());
+            int count = statement.executeUpdate();
+            if (count != 1) {
+                throw new DaoException("Modified more then 1 record");
+            }
+        } catch (SQLException e) {
+            throw new DaoException("Request failed", e);
+        } finally {
+            this.close(statement);
+        }
     }
 
     @Override
@@ -149,6 +160,36 @@ public class OrderDao extends AbstractDao<Order> implements IOrderDao {
         }
         if (orders == null || orders.size() == 0) {
             return null;
+        }
+        return orders;
+    }
+
+    private List<Order> parseResult(ResultSet rs, boolean includeUser) throws SQLException {
+        List<Order> orders = new ArrayList<>();
+        Order order;
+        Book book;
+        User user;
+        while (rs.next()) {
+            order = new Order();
+            order.setId(rs.getInt("Order_ID"));
+            order.setCreationDate(rs.getDate("Creation_Date"));
+            order.setEndingDate(rs.getDate("End_Date"));
+            order.setAccepted(rs.getInt("Accepted") == 1);
+
+            book = new Book();
+            book.setId(rs.getInt("Book_ID"));
+            book.setTitle(rs.getString("Title"));
+            order.setBook(book);
+
+            if (includeUser) {
+                user = new User();
+                user.setName(rs.getString("Name"));
+                user.setMail(rs.getString("Mail"));
+                user.setPhoneNumber(rs.getString("Phone"));
+                order.setUser(user);
+            }
+
+            orders.add(order);
         }
         return orders;
     }

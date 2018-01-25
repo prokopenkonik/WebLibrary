@@ -25,9 +25,25 @@
                 <div><c:out value="${order.book.title}"/></div>
                 <div><c:out value="${order.creationDate}"/></div>
                 <div><c:out value="${order.endingDate}"/></div>
-				<form  action="" method="POST">
-					<input class="accept-order" type="submit" value="Подтвердить">
-				</form>
+				<c:choose>
+					<c:when test="${order.accepted}">
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Заказ принят
+					</c:when>
+					<c:otherwise>
+						<form  action="" method="POST">
+							<input type="hidden" name="command" value="accept_order"/>
+							<input type="hidden" name="order_id" value="<c:out value="${order.id}"/>">
+							<input class="accept-order" type="submit" value="Принять">
+						</form>
+						<form  action="" method="POST">
+							<input type="hidden" name="command" value="deny_order"/>
+							<input type="hidden" name="order_id" value="<c:out value="${order.id}"/>">
+							<input type="hidden" name="book_id" value="<c:out value="${order.book.id}"/>">
+							<input class="accept-order" type="submit" value="Отказать">
+						</form>
+					</c:otherwise>
+				</c:choose>
+				
             </div>
 			</c:forEach>
         </div>

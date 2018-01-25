@@ -5,6 +5,7 @@ import com.company.model.dao.IDaoFactory;
 import com.company.model.dao.IUserDao;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class UserDaoTest {
@@ -25,6 +26,7 @@ public class UserDaoTest {
         Assert.assertEquals(user.getLogin(), login);
     }
 
+    @Ignore
     @Test
     public void create() throws Exception {
         User user = new User();

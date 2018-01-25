@@ -1,6 +1,8 @@
 package com.company.controller.command;
 
 import com.company.controller.command.impl.books.*;
+import com.company.controller.command.impl.orders.AcceptOrderCommand;
+import com.company.controller.command.impl.orders.DenyOrderCommand;
 import com.company.controller.command.impl.orders.GetOrdersCommand;
 import com.company.controller.command.impl.orders.GetOrdersForAdminCommand;
 import com.company.controller.command.impl.users.AuthorizeCommand;
@@ -23,7 +25,9 @@ public enum CommandList {
     GET_ORDERS(new GetOrdersCommand()),
     RETURN_BOOK(new ReturnBookCommand()),
     GET_BOOKS_BY_AUTHOR(new GetBooksByAuthorCommand()),
-    GET_BOOKS_BY_GENRE(new GetBooksByGenreCommand());
+    GET_BOOKS_BY_GENRE(new GetBooksByGenreCommand()),
+    ACCEPT_ORDER(new AcceptOrderCommand()),
+    DENY_ORDER(new DenyOrderCommand());
 
     private Command command;
 
