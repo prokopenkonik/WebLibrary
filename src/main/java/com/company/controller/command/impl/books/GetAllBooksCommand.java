@@ -19,7 +19,7 @@ public class GetAllBooksCommand implements Command {
         IDaoFactory factory = DaoFactory.getInstance();
         try {
             IBookDao bookDao = factory.getBookDao();
-            List<Book> books = bookDao.getBooksWithAuthors();
+            List<Book> books = bookDao.getAll();
             request.setAttribute("list", books);
 
             List<String> genres = bookDao.getGenres();

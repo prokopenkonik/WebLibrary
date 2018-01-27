@@ -1,7 +1,6 @@
 package com.company.model.dao.impl;
 
 import com.company.domain.Administrator;
-import com.company.model.dao.AbstractDao;
 import com.company.model.dao.IAdminDao;
 import com.company.model.dao.connection.ConnectionFactory;
 import com.company.model.exception.DaoException;
@@ -13,30 +12,26 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.company.model.dao.constants.SqlQueries.GET_ADMIN_BY_LOGIN;
+import static com.company.model.util.SqlQueriesManager.getQuery;
+
 public class AdminDao extends AbstractDao<Administrator> implements IAdminDao {
 
-    private static final String SQL_GET_ADMIN_BY_LOGIN =
-            "SELECT * FROM librarydb.admins where Login = ?";
-
-    AdminDao(ConnectionFactory connectionFactory) {
-        super(connectionFactory);
+    AdminDao(ConnectionFactory factory) {
+        super(factory);
     }
 
     @Override
     public Administrator getAdminByLogin(String login) throws DaoException {
         List<Administrator> admins;
-        Connection connection;
-        PreparedStatement statement = null;
-        try {
-            connection = connectionFactory.getConnection();
-            statement = connection.prepareStatement(SQL_GET_ADMIN_BY_LOGIN);
+        try (Connection connection = connectionFactory.getConnection();
+             PreparedStatement statement = connection.prepareStatement(
+                     getQuery(GET_ADMIN_BY_LOGIN))) {
             statement.setString(1, login);
             ResultSet rs = statement.executeQuery();
             admins = parseResultSet(rs);
         } catch (SQLException e) {
             throw new DaoException("Request failed", e);
-        } finally {
-            this.close(statement);
         }
         if (admins == null || admins.size() == 0) {
             return null;
@@ -47,7 +42,43 @@ public class AdminDao extends AbstractDao<Administrator> implements IAdminDao {
         return admins.iterator().next();
     }
 
-    private List<Administrator> parseResultSet(ResultSet rs) throws SQLException {
+    @Override
+    protected String getQueryForCreate() {
+        return null;
+    }
+
+    @Override
+    protected String getQueryForGet() {
+        return null;
+    }
+
+    @Override
+    protected String getQueryForGetAll() {
+        return null;
+    }
+
+    @Override
+    protected String getQueryForUpdate() {
+        return null;
+    }
+
+    @Override
+    protected String getQueryForDelete() {
+        return null;
+    }
+
+    @Override
+    protected void prepareStatementForCreate(PreparedStatement statement, Administrator entity) throws SQLException {
+
+    }
+
+    @Override
+    protected void prepareStatementForUpdate(PreparedStatement statement, Administrator entity) throws SQLException {
+
+    }
+
+    @Override
+    protected List<Administrator> parseResultSet(ResultSet rs) throws SQLException {
         List<Administrator> admins = new ArrayList<>();
         Administrator admin;
         while (rs.next()) {
@@ -58,30 +89,5 @@ public class AdminDao extends AbstractDao<Administrator> implements IAdminDao {
             admins.add(admin);
         }
         return admins;
-    }
-
-    @Override
-    public void create(Administrator entity) throws DaoException {
-
-    }
-
-    @Override
-    public Administrator get(int id) throws DaoException {
-        return null;
-    }
-
-    @Override
-    public List<Administrator> getAll() throws DaoException {
-        return null;
-    }
-
-    @Override
-    public void update(Administrator entity) throws DaoException {
-
-    }
-
-    @Override
-    public void delete(Administrator entity) throws DaoException {
-
     }
 }

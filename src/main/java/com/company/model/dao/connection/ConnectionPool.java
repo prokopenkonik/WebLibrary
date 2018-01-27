@@ -1,8 +1,9 @@
 package com.company.model.dao.connection;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
+import com.company.model.dao.constants.Config;
+import com.company.model.util.DataBaseManager;
+import org.apache.commons.dbcp.BasicDataSource;
+
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -12,21 +13,20 @@ public class ConnectionPool implements ConnectionFactory {
     private static DataSource dataSource;
 
     static {
-        try {
-            Context context = (Context) new InitialContext().lookup("java:/comp/env");
-            dataSource = (DataSource) context.lookup("jdbc/librarydb");
-            System.out.println("yes");
-        } catch (NamingException e) {
-            System.out.println("no");
-            e.printStackTrace();
-        }
+        BasicDataSource ds = new BasicDataSource();
+        ds.setUrl(DataBaseManager.getString(Config.URL));
+        ds.setUsername(DataBaseManager.getString(Config.USER));
+        ds.setPassword(DataBaseManager.getString(Config.PASSWORD));
+        ds.setMaxIdle(Integer.parseInt(DataBaseManager.getString(Config.MAX_IDLE)));
+        ds.setMaxActive(Integer.parseInt(DataBaseManager.getString(Config.MAX_ACTIVE)));
+        dataSource = ds;
     }
 
     public static ConnectionPool getInstance() {
         return instance;
     }
 
-    public ConnectionPool() {
+    private ConnectionPool() {
 
     }
 

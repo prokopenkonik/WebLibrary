@@ -7,7 +7,6 @@ import com.company.model.exception.DaoException;
 import java.util.List;
 
 public interface IBookDao extends IGenericDao<Book> {
-    List<Book> getBooksWithAuthors() throws DaoException;
     List<Book> getBooksByClientQuery(String query) throws DaoException;
     List<Book> getBooksByAuthor(Author author) throws DaoException;
     List<String> getGenres() throws DaoException;

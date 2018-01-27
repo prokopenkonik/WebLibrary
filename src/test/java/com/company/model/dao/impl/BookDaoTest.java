@@ -4,9 +4,8 @@ import com.company.domain.Author;
 import com.company.domain.Book;
 import com.company.model.dao.IBookDao;
 import com.company.model.dao.IDaoFactory;
-import org.junit.Assert;
+import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.List;
@@ -16,6 +15,7 @@ import static org.junit.Assert.*;
 public class BookDaoTest {
 
     private IBookDao bookDao;
+    private int id;
 
     @Before
     public void setUp() throws Exception {
@@ -23,84 +23,105 @@ public class BookDaoTest {
         bookDao = factory.getBookDao();
     }
 
-    @Ignore
+    @After
+    public void tearDown() throws Exception {
+        Book book = new Book();
+        book.setId(id);
+        bookDao.delete(book);
+    }
+
     @Test
     public void create() throws Exception {
         Book book = new Book();
-        book.setTitle("Mybook");
+        book.setTitle("New Book");
         book.setPublisher("New publisher");
         book.setPublishingYear(1230);
-        book.setGenre("Genre");
-        book.setDescription("eeeeeeeeee");
+        book.setGenre("New Genre");
+        book.setDescription("Some description");
+
         Author author = new Author("New", "Author");
         book.addAuthor(author);
         author = new Author("Александр", "Пушкин");
         book.addAuthor(author);
+
         bookDao.create(book);
 
-        List<Book> books = bookDao.getBooksByClientQuery("Mybook");
-        Assert.assertNotNull(books);
-        Assert.assertTrue(books.size() == 1);
+        List<Book> books = bookDao.getBooksByClientQuery("new book");
+        assertNotNull(books);
+        assertTrue(books.size() == 1);
+        assertEquals(book.getTitle(), books.get(0).getTitle());
+        id = books.get(0).getId();
     }
 
     @Test
     public void get() throws Exception {
-        Book book = bookDao.get(1);
-        Assert.assertNotNull(book);
+        Book otherBook = bookDao.get(1);
+        assertNotNull(otherBook);
+        assertNotNull(otherBook.getAuthors());
     }
 
     @Test
     public void getAll() throws Exception {
-        List<Book> books;
-        books = bookDao.getAll();
-        Assert.assertNotNull(books);
-        Assert.assertTrue(books.size() > 0);
-    }
-
-    @Test
-    public void getBooksWithAuthors() throws Exception {
-        List<Book> books;
-        books = bookDao.getBooksWithAuthors();
-        Assert.assertNotNull(books);
-        Assert.assertTrue(books.size() > 0);
-        Assert.assertNotNull(books.get(0).getAuthors());
+        List<Book> books = bookDao.getAll();
+        assertNotNull(books);
+        assertTrue(books.size() > 1);
     }
 
     @Test
     public void getBooksByClientQuery() throws Exception {
-        List<Book> books = bookDao.getBooksByClientQuery("пушкин");
-        Assert.assertNotNull(books);
-        Assert.assertTrue(books.size() > 0);
+        String authorSurname = "Пушкин";
+        List<Book> books = bookDao.getBooksByClientQuery(authorSurname);
+        assertNotNull(books);
+        assertTrue(books.size() > 0);
+        assertEquals(books.get(0).getAuthors().get(0).getSurname(), authorSurname);
     }
 
     @Test
-    public void update() throws Exception {
-        String title = "New title";
-        Book book = bookDao.get(11);
-        book.setTitle(title);
-        Author author = new Author("www","www");
-        book.addAuthor(author);
-        bookDao.update(book);
-        Book modifiedBook = bookDao.get(11);
-        Assert.assertEquals(modifiedBook.getTitle(), title);
-        Assert.assertTrue(book.getAuthors().size() > 1);
-        Assert.assertEquals(book.getAuthors().get(1).getName(), author.getName());
+    public void getBooksByAuthor() throws Exception {
+        Author author = new Author();
+        author.setId(1);
+        List<Book> books = bookDao.getBooksByAuthor(author);
+        assertNotNull(books);
+        assertTrue(books.size() >= 1);
     }
 
-    @Ignore
     @Test
-    public void delete() throws Exception {
-        Book book = new Book();
-        book.setId(12);
-        bookDao.delete(book);
-        book = bookDao.get(12);
-        Assert.assertNull(book);
+    public void getBooksByGenre() throws Exception {
+        List<Book> books = bookDao.getBooksByGenre("Роман");
+        assertNotNull(books);
+        assertTrue(books.size() >= 1);
     }
 
     @Test
     public void getGenres() throws Exception {
         List<String> genres = bookDao.getGenres();
-        Assert.assertNotNull(genres);
-        Assert.assertEquals(genres.get(0), "Роман");
+        assertNotNull(genres);
+        assertEquals(genres.get(0), "Роман");
+    }
+
+    @Test
+    public void update() throws Exception {
+        Book book = bookDao.get(1);
+        book.setPublishingYear(2015);
+        bookDao.update(book);
+
+        Book modifiedBook = bookDao.get(book.getId());
+        assertEquals(modifiedBook.getTitle(), book.getTitle());
+        assertEquals(modifiedBook.getPublishingYear(), 2015);
+        assertTrue(book.getAuthors().size() > 0);
+    }
+
+    @Test
+    public void delete() throws Exception {
+        Book book = new Book();
+        book.setTitle("Q");
+        book.setGenre("W");
+        book.addAuthor(new Author("E", "R"));
+        bookDao.create(book);
+
+        List<Book> books = bookDao.getBooksByClientQuery("Q");
+        bookDao.delete(books.get(0));
+        book = bookDao.get(books.get(0).getId());
+        assertNull(book);
     }
 }

@@ -3,7 +3,6 @@ package com.company.model.dao.impl;
 import com.company.domain.Book;
 import com.company.domain.Order;
 import com.company.domain.User;
-import com.company.model.dao.AbstractDao;
 import com.company.model.dao.IOrderDao;
 import com.company.model.dao.connection.ConnectionFactory;
 import com.company.model.exception.DaoException;
@@ -12,159 +11,62 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.company.model.dao.constants.SqlQueries.*;
+import static com.company.model.dao.constants.SqlQueries.DELETE_ORDER;
+import static com.company.model.dao.constants.SqlQueries.GET_ORDER_BY_USER;
+import static com.company.model.util.SqlQueriesManager.getQuery;
+
 public class OrderDao extends AbstractDao<Order> implements IOrderDao {
 
-    private static final String SQL_ADD_ORDER =
-            "INSERT INTO orders (User_ID, Creation_Date, End_Date, Accepted, Book_ID) VALUES(?,?,?,?,?)";
-    private static final String SQL_GET_ORDERS =
-            "SELECT Order_ID, orders.User_ID, Creation_Date, End_Date, Accepted, books.Book_ID, Title, Name, Phone, Mail " +
-                    "FROM orders JOIN books ON orders.Book_ID=books.Book_ID JOIN users ON orders.User_ID=users.User_ID";
-    private static final String SQL_GET_ORDERS_BY_USERS_ID =
-            "SELECT Order_ID, Creation_Date, End_Date, Accepted, books.Book_ID, Title FROM orders JOIN books ON orders.Book_ID=books.Book_ID JOIN users ON orders.User_ID=users.User_ID WHERE users.User_ID=?";
-    private static final String SQL_DELETE_ORDER =
-            "DELETE FROM orders WHERE Order_ID=?";
-    private static final String SQL_GET_BY_ID =
-            "SELECT Order_ID, Creation_Date, End_Date, Accepted, books.Book_ID, Title FROM orders JOIN books ON orders.Book_ID=books.Book_ID WHERE Order_ID=?";
-    private static final String SQL_UPDATE_ORDER =
-            "UPDATE orders SET Creation_Date=?, End_Date=?, Accepted=? WHERE Order_ID=?";
-
-    OrderDao(ConnectionFactory connectionFactory) {
-        super(connectionFactory);
+    OrderDao(ConnectionFactory factory) {
+        super(factory);
     }
 
     @Override
-    public void create(Order entity) throws DaoException {
-        Connection connection;
-        PreparedStatement statement = null;
-        try {
-            connection = connectionFactory.getConnection();
-            statement = connection.prepareStatement(SQL_ADD_ORDER);
-            statement.setInt(1, entity.getUser().getId());
-            statement.setDate(2, new Date(entity.getCreationDate().getTime()));
-            statement.setDate(3, new Date(entity.getEndingDate().getTime()));
-            statement.setInt(4, 0);
-            statement.setInt(5, entity.getBook().getId());
-            int count = statement.executeUpdate();
-            if (count != 1) {
-                throw new DaoException("Modified more then 1 record");
-            }
-        } catch (SQLException e) {
-            throw new DaoException("Request failed", e);
-        } finally {
-            this.close(statement);
-        }
+    protected String getQueryForCreate() {
+        return getQuery(ADD_ORDER);
     }
 
     @Override
-    public Order get(int id) throws DaoException {
-        List<Order> orders;
-        Connection connection;
-        PreparedStatement statement = null;
-        try {
-            connection = connectionFactory.getConnection();
-            statement = connection.prepareStatement(SQL_GET_BY_ID);
-            statement.setInt(1, id);
-            ResultSet rs = statement.executeQuery();
-            orders = parseResult(rs, false);
-        } catch (SQLException e) {
-            throw new DaoException("Request failed", e);
-        } finally {
-            this.close(statement);
-        }
-        if (orders == null || orders.size() == 0) {
-            return null;
-        }
-        if (orders.size() > 1) {
-            throw new DaoException("Received more then 1 parameter");
-        }
-        return orders.iterator().next();
+    protected String getQueryForGet() {
+        return getQuery(GET_ORDER_BY_ID);
     }
 
     @Override
-    public List<Order> getAll() throws DaoException {
-        List<Order> orders;
-        Connection connection;
-        PreparedStatement statement = null;
-        try {
-            connection = connectionFactory.getConnection();
-            statement = connection.prepareStatement(SQL_GET_ORDERS);
-            ResultSet rs = statement.executeQuery();
-            orders = parseResult(rs, true);
-        } catch (SQLException e) {
-            throw new DaoException("Request failed", e);
-        } finally {
-            this.close(statement);
-        }
-        if (orders == null || orders.size() == 0) {
-            return null;
-        }
-        return orders;
+    protected String getQueryForGetAll() {
+        return getQuery(GET_ALL_ORDERS);
     }
 
     @Override
-    public void update(Order entity) throws DaoException {
-        Connection connection;
-        PreparedStatement statement = null;
-        try {
-            connection = connectionFactory.getConnection();
-            statement = connection.prepareStatement(SQL_UPDATE_ORDER);
-            statement.setDate(1, new Date(entity.getCreationDate().getTime()));
-            statement.setDate(2, new Date(entity.getEndingDate().getTime()));
-            statement.setInt(3, entity.isAccepted() ? 1 : 0);
-            statement.setInt(4, entity.getId());
-            int count = statement.executeUpdate();
-            if (count != 1) {
-                throw new DaoException("Modified more then 1 record");
-            }
-        } catch (SQLException e) {
-            throw new DaoException("Request failed", e);
-        } finally {
-            this.close(statement);
-        }
+    protected String getQueryForUpdate() {
+        return getQuery(UPDATE_ORDER);
     }
 
     @Override
-    public void delete(Order entity) throws DaoException {
-        Connection connection;
-        PreparedStatement statement = null;
-        try {
-            connection = connectionFactory.getConnection();
-            statement = connection.prepareStatement(SQL_DELETE_ORDER);
-            statement.setInt(1, entity.getId());
-            int count = statement.executeUpdate();
-            if (count != 1) {
-                throw new DaoException("Deleted more then 1 record");
-            }
-        } catch (SQLException e) {
-            throw new DaoException("Request failed", e);
-        } finally {
-            this.close(statement);
-        }
+    protected String getQueryForDelete() {
+        return getQuery(DELETE_ORDER);
     }
 
     @Override
-    public List<Order> getByUsersId(int id) throws DaoException {
-        List<Order> orders;
-        Connection connection;
-        PreparedStatement statement = null;
-        try {
-            connection = connectionFactory.getConnection();
-            statement = connection.prepareStatement(SQL_GET_ORDERS_BY_USERS_ID);
-            statement.setInt(1, id);
-            ResultSet rs = statement.executeQuery();
-            orders = parseResult(rs, false);
-        } catch (SQLException e) {
-            throw new DaoException("Request failed", e);
-        } finally {
-            this.close(statement);
-        }
-        if (orders == null || orders.size() == 0) {
-            return null;
-        }
-        return orders;
+    protected void prepareStatementForCreate(PreparedStatement statement, Order entity)
+            throws SQLException {
+        statement.setInt(1, entity.getUser().getId());
+        statement.setDate(2, new Date(entity.getCreationDate().getTime()));
+        statement.setDate(3, new Date(entity.getEndingDate().getTime()));
+        statement.setInt(4, 0);
+        statement.setInt(5, entity.getBook().getId());
     }
 
-    private List<Order> parseResult(ResultSet rs, boolean includeUser) throws SQLException {
+    @Override
+    protected void prepareStatementForUpdate(PreparedStatement statement, Order entity) throws SQLException {
+        statement.setDate(1, new Date(entity.getCreationDate().getTime()));
+        statement.setDate(2, new Date(entity.getEndingDate().getTime()));
+        statement.setInt(3, entity.isAccepted() ? 1 : 0);
+        statement.setInt(4, entity.getId());
+    }
+
+    @Override
+    protected List<Order> parseResultSet(ResultSet rs) throws SQLException {
         List<Order> orders = new ArrayList<>();
         Order order;
         Book book;
@@ -181,15 +83,31 @@ public class OrderDao extends AbstractDao<Order> implements IOrderDao {
             book.setTitle(rs.getString("Title"));
             order.setBook(book);
 
-            if (includeUser) {
-                user = new User();
-                user.setName(rs.getString("Name"));
-                user.setMail(rs.getString("Mail"));
-                user.setPhoneNumber(rs.getString("Phone"));
-                order.setUser(user);
-            }
+            user = new User();
+            user.setName(rs.getString("Name"));
+            user.setMail(rs.getString("Mail"));
+            user.setPhoneNumber(rs.getString("Phone"));
+            order.setUser(user);
 
             orders.add(order);
+        }
+        return orders;
+    }
+
+    @Override
+    public List<Order> getByUsersId(int id) throws DaoException {
+        List<Order> orders;
+        try (Connection connection = connectionFactory.getConnection();
+             PreparedStatement statement = connection.prepareStatement(
+                     getQuery(GET_ORDER_BY_USER))) {
+            statement.setInt(1, id);
+            ResultSet rs = statement.executeQuery();
+            orders = parseResultSet(rs);
+        } catch (SQLException e) {
+            throw new DaoException("Request failed", e);
+        }
+        if (orders == null || orders.size() == 0) {
+            return null;
         }
         return orders;
     }
