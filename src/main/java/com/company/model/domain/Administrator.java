@@ -1,4 +1,4 @@
-package com.company.domain;
+package com.company.model.domain;
 
 public class Administrator extends Entity {
     private String login;

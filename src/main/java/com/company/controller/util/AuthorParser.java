@@ -1,6 +1,6 @@
 package com.company.controller.util;
 
-import com.company.domain.Author;
+import com.company.model.domain.Author;
 
 import java.util.ArrayList;
 import java.util.List;

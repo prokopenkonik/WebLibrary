@@ -1,6 +1,6 @@
 package com.company.model.dao;
 
-import com.company.domain.Entity;
+import com.company.model.domain.Entity;
 import com.company.model.exception.DaoException;
 
 import java.util.List;

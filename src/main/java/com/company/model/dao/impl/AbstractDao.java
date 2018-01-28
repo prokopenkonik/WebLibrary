@@ -1,6 +1,6 @@
 package com.company.model.dao.impl;
 
-import com.company.domain.Entity;
+import com.company.model.domain.Entity;
 import com.company.model.dao.IGenericDao;
 import com.company.model.dao.connection.ConnectionFactory;
 import com.company.model.exception.DaoException;

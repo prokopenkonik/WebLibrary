@@ -1,7 +1,7 @@
 package com.company.model.dao.impl;
 
-import com.company.domain.Author;
-import com.company.domain.Book;
+import com.company.model.domain.Author;
+import com.company.model.domain.Book;
 import com.company.model.dao.IAuthorDao;
 import com.company.model.dao.IBookDao;
 import com.company.model.dao.connection.ConnectionFactory;

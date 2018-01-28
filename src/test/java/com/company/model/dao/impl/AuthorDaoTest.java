@@ -1,12 +1,9 @@
 package com.company.model.dao.impl;
 
-import com.company.domain.Author;
+import com.company.model.domain.Author;
 import com.company.model.dao.IAuthorDao;
 import com.company.model.dao.IDaoFactory;
-import com.company.model.dao.connection.ConnectionPool;
-import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.List;

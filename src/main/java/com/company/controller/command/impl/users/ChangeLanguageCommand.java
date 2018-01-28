@@ -14,12 +14,15 @@ public class ChangeLanguageCommand implements Command {
         switch (language) {
             case "ua":
                 session.setAttribute("language", "uk_UA");
+                logger.info("language changed to ua");
                 break;
             case "en":
                 session.setAttribute("language", "en_US");
+                logger.info("language changed to en");
                 break;
             case "ru":
                 session.setAttribute("language", "ru_RU");
+                logger.info("language changed to ru");
                 break;
         }
         return new GetAllBooksCommand().execute(request);

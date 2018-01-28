@@ -1,11 +1,10 @@
 package com.company.model.dao.impl;
 
-import com.company.domain.Book;
-import com.company.domain.Order;
-import com.company.domain.User;
+import com.company.model.domain.Book;
+import com.company.model.domain.Order;
+import com.company.model.domain.User;
 import com.company.model.dao.IOrderDao;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.GregorianCalendar;

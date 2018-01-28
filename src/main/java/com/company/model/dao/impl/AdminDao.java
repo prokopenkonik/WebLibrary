@@ -1,6 +1,6 @@
 package com.company.model.dao.impl;
 
-import com.company.domain.Administrator;
+import com.company.model.domain.Administrator;
 import com.company.model.dao.IAdminDao;
 import com.company.model.dao.connection.ConnectionFactory;
 import com.company.model.exception.DaoException;

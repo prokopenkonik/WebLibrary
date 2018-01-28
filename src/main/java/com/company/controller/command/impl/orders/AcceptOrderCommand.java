@@ -1,7 +1,7 @@
 package com.company.controller.command.impl.orders;
 
 import com.company.controller.command.Command;
-import com.company.domain.Order;
+import com.company.model.domain.Order;
 import com.company.model.dao.IDaoFactory;
 import com.company.model.dao.IOrderDao;
 import com.company.model.dao.impl.DaoFactory;

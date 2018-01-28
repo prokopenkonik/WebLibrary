@@ -3,7 +3,7 @@ package com.company.controller.command.impl.users;
 import com.company.controller.command.Command;
 import com.company.controller.command.impl.books.GetAllBooksCommand;
 import com.company.controller.util.Encryptor;
-import com.company.domain.User;
+import com.company.model.domain.User;
 import com.company.model.dao.IDaoFactory;
 import com.company.model.dao.IUserDao;
 import com.company.model.dao.impl.DaoFactory;

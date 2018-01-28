@@ -1,6 +1,6 @@
 package com.company.model.dao.impl;
 
-import com.company.domain.User;
+import com.company.model.domain.User;
 import com.company.model.dao.IDaoFactory;
 import com.company.model.dao.IUserDao;
 import org.junit.Assert;

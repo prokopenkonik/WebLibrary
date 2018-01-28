@@ -2,8 +2,8 @@ package com.company.controller.command.impl.books;
 
 import com.company.controller.command.Command;
 import com.company.controller.util.BooksCrud;
-import com.company.domain.Author;
-import com.company.domain.Book;
+import com.company.model.domain.Author;
+import com.company.model.domain.Book;
 import com.company.model.dao.IAuthorDao;
 import com.company.model.dao.IBookDao;
 import com.company.model.dao.IDaoFactory;

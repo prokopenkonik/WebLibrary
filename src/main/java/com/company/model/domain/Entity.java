@@ -1,4 +1,4 @@
-package com.company.domain;
+package com.company.model.domain;
 
 public class Entity {
     private Integer id;

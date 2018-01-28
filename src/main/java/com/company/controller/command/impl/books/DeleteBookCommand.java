@@ -1,7 +1,7 @@
 package com.company.controller.command.impl.books;
 
 import com.company.controller.command.Command;
-import com.company.domain.Book;
+import com.company.model.domain.Book;
 import com.company.model.dao.IBookDao;
 import com.company.model.dao.IDaoFactory;
 import com.company.model.dao.impl.DaoFactory;

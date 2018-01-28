@@ -1,8 +1,8 @@
 package com.company.model.dao.impl;
 
-import com.company.domain.Book;
-import com.company.domain.Order;
-import com.company.domain.User;
+import com.company.model.domain.Book;
+import com.company.model.domain.Order;
+import com.company.model.domain.User;
 import com.company.model.dao.IOrderDao;
 import com.company.model.dao.connection.ConnectionFactory;
 import com.company.model.exception.DaoException;

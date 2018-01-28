@@ -1,7 +1,7 @@
 package com.company.model.dao;
 
-import com.company.domain.Author;
-import com.company.domain.Book;
+import com.company.model.domain.Author;
+import com.company.model.domain.Book;
 import com.company.model.exception.DaoException;
 
 import java.util.List;
