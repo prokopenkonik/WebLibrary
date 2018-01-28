@@ -6,12 +6,6 @@
          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
          http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
 
-    <resource-ref>
-        <res-ref-name>jdbc/librarydb</res-ref-name>
-        <res-type>javax.sql.DataSource</res-type>
-        <res-auth>Container</res-auth>
-    </resource-ref>
-
     <servlet>
         <servlet-name>controller</servlet-name>
         <servlet-class>com.company.controller.MainController</servlet-class>
@@ -39,4 +33,15 @@
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
+
+    <error-page>
+        <error-code>404</error-code>
+        <location>/pages/errors/error404.jsp</location>
+    </error-page>
+
+    <error-page>
+        <error-code>500</error-code>
+        <location>/pages/errors/error500.jsp</location>
+    </error-page>
+
 </web-app>

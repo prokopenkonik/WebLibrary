@@ -6,6 +6,7 @@ import com.company.controller.command.impl.orders.DenyOrderCommand;
 import com.company.controller.command.impl.orders.GetOrdersCommand;
 import com.company.controller.command.impl.orders.GetOrdersForAdminCommand;
 import com.company.controller.command.impl.users.AuthorizeCommand;
+import com.company.controller.command.impl.users.ChangeLanguageCommand;
 import com.company.controller.command.impl.users.LogoutCommand;
 import com.company.controller.command.impl.users.RegistrationCommand;
 
@@ -27,7 +28,9 @@ public enum CommandList {
     GET_BOOKS_BY_AUTHOR(new GetBooksByAuthorCommand()),
     GET_BOOKS_BY_GENRE(new GetBooksByGenreCommand()),
     ACCEPT_ORDER(new AcceptOrderCommand()),
-    DENY_ORDER(new DenyOrderCommand());
+    DENY_ORDER(new DenyOrderCommand()),
+    CHANGE_LANGUAGE(new ChangeLanguageCommand()),
+    GET_PAGE_TO_ADD(new GetPageToAddCommand());
 
     private Command command;
 

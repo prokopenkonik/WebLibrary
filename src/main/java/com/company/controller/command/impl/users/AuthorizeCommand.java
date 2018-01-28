@@ -29,6 +29,8 @@ public class AuthorizeCommand implements Command {
                 User user = userDao.getUserByLogin(login);
                 if (user != null && user.getPassword().equals(password)) {
                     request.getSession().setAttribute("user", user);
+                } else {
+                    request.setAttribute("error", "error.login");
                 }
             }
         } catch (DaoException e) {

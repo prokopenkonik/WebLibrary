@@ -1,15 +1,18 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <html>
 
 <body>
     
 	<c:import url="\header.jsp" />
+	<%@include file="set-language.jsp"%>
 
     <div class="body-block">
         <aside>
-            <span class="filter-span">Сортировать по:</span>
-                <span class="filter-name">Автор</span>
+            <span class="filter-span"><fmt:message key="label.sort.by" /></span>
+                <span class="filter-name"><fmt:message key="label.sort.authors" /></span>
                 	<ul class="authors">
 						<c:forEach var="author" items="${authors}">
 							<li>
@@ -21,7 +24,7 @@
 							</li>
 						</c:forEach>
                 	</ul>
-                <span class="filter-name">Жанр</span>
+                <span class="filter-name"><fmt:message key="label.sort.genres" /></span>
 					<ul class="janr">
 						<c:forEach var="genre" items="${genres}">
 							<li>

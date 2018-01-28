@@ -1,10 +1,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <html>
 
 	<body>
-
+		<%@include file="set-language.jsp"%>
 		<ul class="books">
 			<c:forEach var="book" items="${list}">
 				<li>
@@ -32,14 +33,14 @@
 					</form>
 
 					<img src="../images/kniga.jpg" alt="image">
-					<p>Автор:
+					<p><fmt:message key="label.author" />
 						<span>
 						<c:forEach var="author" items="${book.authors}">
-							<br><c:out value="${author.name}"/> <c:out value="${author.surname}"/>
+							<c:out value="${author.name}"/> <c:out value="${author.surname}"/></br>
 						</c:forEach>
 						</span>
 					</p>
-					<p class="genre">Жанр: <c:out value="${book.genre}"/></p>
+					<p class="genre"><fmt:message key="label.genre" /><c:out value="${book.genre}"/></p>
 				</li>
 			</c:forEach>
         </ul>

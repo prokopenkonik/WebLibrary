@@ -6,5 +6,6 @@ public interface BooksCrud {
     String GET_BOOK_TO_UPDATE_JSP = "/pages/edit-book.jsp";
     String SEARCH_BOOK_JSP = "/pages/search.jsp";
     String GET_ORDERS_FOR_ADMIN_JSP = "/pages/orders.jsp";
-    String GET_ORDERS_FOR_USER_JSP = "pages/user-orders.jsp";
+    String GET_ORDERS_FOR_USER_JSP = "/pages/user-orders.jsp";
+    String ADD_BOOK_JSP = "/pages/add-book.jsp";
 }
