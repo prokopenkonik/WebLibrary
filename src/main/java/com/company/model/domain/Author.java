@@ -7,6 +7,7 @@ import java.util.List;
 public class Author extends Entity {
     private String name;
     private String surname;
+    private String language;
     private List<Book> books;
 
     public Author() {
@@ -58,5 +59,13 @@ public class Author extends Entity {
     @Override
     public String toString() {
         return name + " " + surname;
+    }
+
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
     }
 }

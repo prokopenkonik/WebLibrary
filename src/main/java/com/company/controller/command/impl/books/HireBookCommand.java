@@ -1,13 +1,13 @@
 package com.company.controller.command.impl.books;
 
 import com.company.controller.command.Command;
-import com.company.model.domain.Book;
-import com.company.model.domain.Order;
-import com.company.model.domain.User;
 import com.company.model.dao.IBookDao;
 import com.company.model.dao.IDaoFactory;
 import com.company.model.dao.IOrderDao;
 import com.company.model.dao.impl.DaoFactory;
+import com.company.model.domain.Book;
+import com.company.model.domain.Order;
+import com.company.model.domain.User;
 import com.company.model.exception.DaoException;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,6 +26,11 @@ public class HireBookCommand implements Command {
         Date creationDate = GregorianCalendar.getInstance().getTime();
         try {
             Date endingDate = new SimpleDateFormat("yyyy-mm-dd").parse(request.getParameter("date"));
+            if (creationDate.after(endingDate)) {
+                request.setAttribute("error", "error.borrow");
+                return new GetBookCommand().execute(request);
+            }
+
             Order order = new Order();
             order.setCreationDate(creationDate);
             order.setEndingDate(endingDate);

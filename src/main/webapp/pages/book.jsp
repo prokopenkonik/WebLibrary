@@ -29,6 +29,9 @@
 								<input type="date" name="date" value="">
 							</form>
 						</c:if>
+						<c:if test="${not empty error}">
+							<span><fmt:message key="${error}" /></span>
+						</c:if>
 					</c:when>
 					<c:otherwise>
 						<fmt:message key="label.taken" />

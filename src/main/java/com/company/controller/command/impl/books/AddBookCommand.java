@@ -23,6 +23,15 @@ public class AddBookCommand implements Command {
             book.setPublisher(request.getParameter("publisher"));
             book.setPublishingYear(Integer.parseInt(request.getParameter("publishingYear")));
             book.setDescription(request.getParameter("description"));
+
+            String language;
+            if (request.getSession(true).getAttribute("language") == null) {
+                language = "ru_RU";
+            } else {
+                language = request.getSession(true).getAttribute("language").toString();
+            }
+            book.setLanguage(language);
+
             bookDao.create(book);
         } catch (DaoException e) {
             e.printStackTrace();

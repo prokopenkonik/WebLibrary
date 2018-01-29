@@ -52,6 +52,7 @@ public class AuthorDao extends AbstractDao<Author> implements IAuthorDao {
             throws SQLException {
         statement.setString(1, entity.getName());
         statement.setString(2, entity.getSurname());
+        statement.setString(3, entity.getLanguage());
     }
 
     @Override
@@ -105,5 +106,20 @@ public class AuthorDao extends AbstractDao<Author> implements IAuthorDao {
             throw new DaoException("Received more then 1 parameter");
         }
         return authors.iterator().next();
+    }
+
+    @Override
+    public List<Author> getByLanguage(String language) throws DaoException {
+        List<Author> authors;
+        String query = getQueryForGetAll();
+        try (Connection connection = connectionFactory.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, language);
+            ResultSet rs = statement.executeQuery();
+            authors = parseResultSet(rs);
+        } catch (SQLException e) {
+            throw new DaoException("Request failed", e);
+        }
+        return authors;
     }
 }

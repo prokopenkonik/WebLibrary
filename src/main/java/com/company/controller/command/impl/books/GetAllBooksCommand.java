@@ -1,10 +1,9 @@
 package com.company.controller.command.impl.books;
 
 import com.company.controller.command.Command;
-import com.company.controller.util.BooksCrud;
-import com.company.model.domain.Author;
+import com.company.controller.util.BookUtil;
+import com.company.controller.util.PagesPaths;
 import com.company.model.domain.Book;
-import com.company.model.dao.IAuthorDao;
 import com.company.model.dao.IBookDao;
 import com.company.model.dao.IDaoFactory;
 import com.company.model.dao.impl.DaoFactory;
@@ -19,18 +18,22 @@ public class GetAllBooksCommand implements Command {
         IDaoFactory factory = DaoFactory.getInstance();
         try {
             IBookDao bookDao = factory.getBookDao();
-            List<Book> books = bookDao.getAll();
+            String language;
+            if (request.getSession(true).getAttribute("language") == null) {
+                language = "ru_RU";
+            } else {
+                language = request.getSession(true).getAttribute("language").toString();
+            }
+
+            List<Book> books = bookDao.getByLanguage(language);
             request.setAttribute("list", books);
 
-            List<String> genres = bookDao.getGenres();
-            request.setAttribute("genres", genres);
-
-            IAuthorDao authorDao = factory.getAuthorDao();
-            List<Author>  authors = authorDao.getAll();
-            request.setAttribute("authors", authors);
+            BookUtil.setSortingParameters(request, factory, language);
         } catch (DaoException e) {
             e.printStackTrace();
         }
-        return BooksCrud.LIST_ALL_BOOKS_JSP;
+        return PagesPaths.LIST_ALL_BOOKS_JSP;
     }
+
+
 }

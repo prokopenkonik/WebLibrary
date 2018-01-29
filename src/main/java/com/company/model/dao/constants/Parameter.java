@@ -1,7 +1,7 @@
 package com.company.model.dao.constants;
 
 public enum Parameter {
-    QUERY, AUTHOR, GENRE;
+    QUERY, AUTHOR, GENRE, LANGUAGE;
 
     private String argument;
     private String query;

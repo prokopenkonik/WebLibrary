@@ -58,6 +58,7 @@ public class BookDao extends AbstractDao<Book> implements IBookDao {
         statement.setString(4, entity.getGenre());
         statement.setString(5, entity.getDescription());
         statement.setInt(6, 0);
+        statement.setString(7, entity.getLanguage());
     }
 
     private void prepareStatementForRelationCreate(PreparedStatement statementForRelation,
@@ -219,6 +220,13 @@ public class BookDao extends AbstractDao<Book> implements IBookDao {
         return getBooksPyParameter(parameter);
     }
 
+    @Override
+    public List<Book> getByLanguage(String lang) throws DaoException {
+        Parameter parameter = Parameter.LANGUAGE;
+        parameter.setQuery(getQueryForGetAll());
+        parameter.setArgument(lang);
+        return getBooksPyParameter(parameter);
+    }
 
     private List<Book> getBooksPyParameter(Parameter parameter) throws DaoException {
         List<Book> books;
@@ -238,6 +246,9 @@ public class BookDao extends AbstractDao<Book> implements IBookDao {
                 case GENRE:
                     statement.setString(1, parameter.getArgument());
                     break;
+                case LANGUAGE:
+                    statement.setString(1, parameter.getArgument());
+                    break;
             }
             ResultSet rs = statement.executeQuery();
             books = parseResultSet(rs);
@@ -251,11 +262,12 @@ public class BookDao extends AbstractDao<Book> implements IBookDao {
     }
 
     @Override
-    public List<String> getGenres() throws DaoException {
+    public List<String> getGenresByLanguage(String language) throws DaoException {
         List<String> genres;
         try (Connection connection = connectionFactory.getConnection();
              PreparedStatement statement = connection.prepareStatement(
                      getQuery(GET_GENRES))){
+            statement.setString(1, language);
             ResultSet rs = statement.executeQuery();
             genres = parseResultSetForGenres(rs);
         } catch (SQLException e) {
@@ -293,6 +305,7 @@ public class BookDao extends AbstractDao<Book> implements IBookDao {
         IAuthorDao authorDao = DaoFactory.getInstance().getAuthorDao();
         for (Author author : entity.getAuthors()) {
             try {
+                author.setLanguage(entity.getLanguage());
                 authorDao.create(author);
             } catch (DaoException e) {
                 if (!e.getMessage().equals("Such author already exists")) {

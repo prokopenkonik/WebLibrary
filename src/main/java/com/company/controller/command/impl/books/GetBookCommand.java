@@ -1,7 +1,7 @@
 package com.company.controller.command.impl.books;
 
 import com.company.controller.command.Command;
-import com.company.controller.util.BooksCrud;
+import com.company.controller.util.PagesPaths;
 import com.company.model.domain.Book;
 import com.company.model.dao.IBookDao;
 import com.company.model.dao.IDaoFactory;
@@ -21,6 +21,6 @@ public class GetBookCommand implements Command {
         } catch (DaoException e) {
             e.printStackTrace();
         }
-        return BooksCrud.GET_BOOK_JSP;
+        return PagesPaths.GET_BOOK_JSP;
     }
 }

@@ -12,6 +12,7 @@ public class Book extends Entity{
     private int publishingYear;
     private String description;
     private boolean taken;
+    private String language;
     private List<Author> authors = new ArrayList<>();
 
     public Book() {
@@ -107,5 +108,13 @@ public class Book extends Entity{
     @Override
     public String toString() {
         return title;
+    }
+
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
     }
 }

@@ -1,7 +1,7 @@
 package com.company.controller.command.impl.orders;
 
 import com.company.controller.command.Command;
-import com.company.controller.util.BooksCrud;
+import com.company.controller.util.PagesPaths;
 import com.company.model.domain.Order;
 import com.company.model.dao.IDaoFactory;
 import com.company.model.dao.IOrderDao;
@@ -22,6 +22,6 @@ public class GetOrdersForAdminCommand implements Command {
         } catch (DaoException e) {
             e.printStackTrace();
         }
-        return BooksCrud.GET_ORDERS_FOR_ADMIN_JSP;
+        return PagesPaths.GET_ORDERS_FOR_ADMIN_JSP;
     }
 }
